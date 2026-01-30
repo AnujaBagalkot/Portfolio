@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Skill Assessment</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="gradient-bg p-6">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="/" class="text-xl font-bold">← Back</a>
+            <h1 class="text-2xl font-bold">Online Skill Assessment</h1>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <div class="max-w-4xl mx-auto p-8">
+
+        <h2 class="text-4xl font-bold mb-10 text-center">
+            Attempt Your Quiz 🚀
+        </h2>
+
+        <form action="/submit-quiz/{{domain}}" method="POST" class="space-y-8">
+
+            {% for q in questions %}
+            <div class="glass p-8 rounded-2xl">
+
+                <p class="text-xl font-semibold mb-6">
+                    {{loop.index}}. {{q.question}}
+                </p>
+
+                {% set qindex = loop.index0 %}
+
+                <div class="space-y-3">
+                    {% for opt in q.options %}
+                    <label class="flex items-center gap-3 bg-gray-800 px-5 py-3 rounded-lg hover:bg-gray-700 transition cursor-pointer">
+                        <input type="radio"
+                               name="q{{qindex}}"
+                               value="{{opt}}"
+                               required>
+                        <span>{{opt}}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+
+            </div>
+            {% endfor %}
+
+            <!-- Submit Button -->
+            <button type="submit"
+                    class="w-full bg-purple-600 py-4 rounded-xl text-lg font-bold hover:bg-purple-700 transition">
+                Submit Quiz →
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
